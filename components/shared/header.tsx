@@ -15,31 +15,6 @@ export default function Header() {
         <span className='ml-2 text-2xl font-bold'>Flow Pilot</span>
       </Link>
       <nav className='ml-auto flex items-center gap-4 font-medium'>
-        {/* <Link
-          className='text-sm hover:bg-neutral-700 transition-colors px-2 py-1 rounded-md'
-          href='#'
-        >
-          Features
-        </Link>
-        <Link
-          className='text-sm hover:bg-neutral-700 transition-colors px-2 py-1 rounded-md'
-          href='#'
-        >
-          Pricing
-        </Link>
-        <Link
-          className='text-sm hover:bg-neutral-700 transition-colors px-2 py-1 rounded-md'
-          href='#'
-        >
-          About
-        </Link> */}
-        {/* <Link
-          className='text-sm hover:bg-neutral-700 transition-colors px-2 py-1 rounded-md'
-          href='#'
-        >
-          Contact
-        </Link> */}
-
         <Link
           href='/app'
           className='uppercase text-sm bg-gradient-to-br from-blue-400 to-blue-600 text-white px-4 py-2 rounded-md hover:bg-gradient-to-bl transition-colors'
