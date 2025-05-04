@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Logo({ small = false }: { small?: boolean }) {
-  const logoSize = small ? 40 : 80;
+  const logoSize = small ? 40 : 50;
   return (
     <Link className='flex flex-row items-center w-full' href='/'>
       <Image
