@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema, { FormSchema } from '@/schemas/project-schema';
-import { z } from 'zod';
+import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -18,8 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import Cover from '@/components/shared/forms/cover';
 
 export default function ProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,8 +43,15 @@ export default function ProjectForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-8 max-w-3xl mx-auto py-10'
+        className='space-y-8 max-w-3xl mx-auto '
       >
+        <h2 className='text-4xl font-bold text-zinc-200'>
+          Create a new project
+        </h2>
+        <div className='py-5 space-y-1'>
+          <FormLabel className='text-lg font-semibold'>Cover Image</FormLabel>
+          <Cover />
+        </div>
         <FormField
           control={form.control}
           name='name'
