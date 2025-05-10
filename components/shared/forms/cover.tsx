@@ -5,13 +5,19 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import EmojiPicker, { Theme } from 'emoji-picker-react';
 
-export default function Cover() {
-  const [coverUrl, setCoverUrl] = useState(
-    'https://avatar.vercel.sh/webarchitech'
-  );
-  const [emoji, setEmoji] = useState(
-    'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f30e.png'
-  );
+type CoverProps = {
+  coverUrl: string | File;
+  setCoverUrl: (coverUrl: string | File) => void;
+  emoji: string;
+  setEmoji: (emoji: string) => void;
+};
+
+export default function Cover({
+  coverUrl,
+  setCoverUrl,
+  emoji,
+  setEmoji,
+}: CoverProps) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -26,6 +32,7 @@ export default function Cover() {
       if (!e.target?.result) return;
       const imageUrl = e.target.result as string;
       setCoverUrl(imageUrl);
+      setCoverUrl(file);
     };
     reader.readAsDataURL(file);
   };
@@ -40,7 +47,11 @@ export default function Cover() {
     <div className='relative w-full h-44 bg-gray-200 group rounded-sm'>
       <Image
         alt='Cover Image'
-        src={coverUrl || ''}
+        src={
+          typeof coverUrl === 'string'
+            ? coverUrl
+            : URL.createObjectURL(coverUrl)
+        }
         fill
         className='object-cover group-hover:brightness-80 transition-all duration-300 ease-in-out rounded'
       />

@@ -23,7 +23,12 @@ import Cover from '@/components/shared/forms/cover';
 
 export default function ProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
-  // Replace with your loading state
+  const [coverUrl, setCoverUrl] = useState<string | File>(
+    'https://avatar.vercel.sh/webarchitech'
+  );
+  const [emoji, setEmoji] = useState(
+    'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f30e.png'
+  );
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
@@ -50,7 +55,12 @@ export default function ProjectForm() {
         </h2>
         <div className='py-5 space-y-1'>
           <FormLabel className='text-lg font-semibold'>Cover Image</FormLabel>
-          <Cover />
+          <Cover
+            coverUrl={coverUrl}
+            emoji={emoji}
+            setCoverUrl={setCoverUrl}
+            setEmoji={setEmoji}
+          />
         </div>
         <FormField
           control={form.control}
