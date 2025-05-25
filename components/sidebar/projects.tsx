@@ -8,7 +8,7 @@ export default function Projects() {
         projects
       </span>
       <Link
-        href='/dashboard/projects/new'
+        href='/projects/new'
         className='flex justify-center items-center border py-3 text-sm rounded-lg font-medium'
       >
         <Plus className='mr-2 size-4' />
