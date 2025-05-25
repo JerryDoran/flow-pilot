@@ -1,14 +1,18 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
-import Link from 'next/link';
 import { useState } from 'react';
-
+import Link from 'next/link';
+import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+// import { registerUser } from "@/actions/register";
+import { useRouter } from 'next/navigation';
+import Logo from '../shared/logo';
+import { Icons } from '../shared/oauth-buttons';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 import {
   Form,
@@ -18,11 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { toast } from 'sonner';
-// import { registerUser } from "@/actions/register";
-import { useRouter } from 'next/navigation';
-import Logo from '../shared/logo';
-import { Icons } from '../shared/oauth-buttons';
 
 // Define schema for form validation with Zod
 const registerSchema = z.object({
