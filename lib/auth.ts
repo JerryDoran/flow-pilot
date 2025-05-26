@@ -3,6 +3,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 // If your Prisma file is located elsewhere, you can change the path
 import { PrismaClient } from '@/lib/generated/prisma';
 import db from '@/prisma/db';
+import { nextCookies } from 'better-auth/next-js';
 
 const prisma = new PrismaClient();
 export const auth = betterAuth({
@@ -18,6 +19,7 @@ export const auth = betterAuth({
   account: {
     accountLinking: {
       enabled: true,
+    },
   },
   socialProviders: {
     github: {
@@ -29,4 +31,5 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  plugins: [nextCookies()],
 });
