@@ -18,6 +18,7 @@ export default function PrivateLayout({
         <div className='md:w-[350px] w-auto'>
           <Sidebar />
         </div>
+
         <div className='md:p-24 px-12 py-12 w-full'>{children}</div>
       </div>
     </>

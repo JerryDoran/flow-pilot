@@ -1,3 +1,5 @@
+// import Footer from '@/components/shared/footer';
+import Footer from '@/components/shared/footer';
 import Header from '@/components/shared/header';
 
 export default function MainLayout({
@@ -9,6 +11,7 @@ export default function MainLayout({
     <div>
       <Header />
       <div>{children}</div>
+      <Footer />
     </div>
   );
 }
