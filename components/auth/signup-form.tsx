@@ -6,7 +6,8 @@ import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-// import { registerUser } from "@/actions/register";
+import { registerUser } from '@/actions/users';
+
 import { useRouter } from 'next/navigation';
 import Logo from '../shared/logo';
 import { Icons } from '../shared/oauth-buttons';
@@ -58,21 +59,25 @@ export default function SignupForm() {
     setIsSubmitting(true);
 
     try {
-      // const result = await registerUser(data);
-      // if (result.success) {
-      //   toast.success("Success!", {
-      //     description: result.message,
-      //   });
-      //   // Optional: redirect to login page
-      //   router.push("/dashboard");
-      // } else {
-      //   toast.error("Error", {
-      //     description: result.message,
-      //   });
-      // }
+      const result = await registerUser(data);
+      if (result.success) {
+        toast.success('Success!', {
+          description: result.message,
+        });
+        // Optional: redirect to login page
+        router.push('/dashboard');
+      } else {
+        toast.error('Error', {
+          description: result.message,
+        });
+      }
     } catch (error) {
       toast.error('Error', {
-        description: 'Something went wrong. Please try again.',
+        description:
+          typeof error === 'object' && error !== null && 'message' in error
+            ? (error as { message?: string }).message ||
+              'Failed to register user'
+            : 'An unexpected error occurred',
       });
       console.log(error);
     } finally {

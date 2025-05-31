@@ -21,6 +21,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import Logo from '../shared/logo';
 import { Icons } from '../shared/oauth-buttons';
+import { loginUser } from '@/actions/users';
 
 // Define the validation schema with Zod
 const loginSchema = z.object({
@@ -51,18 +52,18 @@ export default function LoginForm() {
     console.log(values);
 
     try {
-      // const result = await loginUser(values);
-      // if (result.success) {
-      //   toast.success("Success!", {
-      //     description: result.message,
-      //   });
-      //   // Optional: redirect to login page
-      //   router.push("/dashboard");
-      // } else {
-      //   toast.error("Error", {
-      //     description: result.message,
-      //   });
-      // }
+      const result = await loginUser(values);
+      if (result.success) {
+        toast.success("Success!", {
+          description: result.message,
+        });
+        // Optional: redirect to login page
+        router.push("/dashboard");
+      } else {
+        toast.error("Error", {
+          description: result.message,
+        });
+      }
     } catch (error) {
       toast.error('Error', {
         description: 'Something went wrong. Please try again.',

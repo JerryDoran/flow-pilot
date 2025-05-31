@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Logo from '@/components/shared/logo';
 import Projects from '@/components/sidebar/projects';
 import SidebarLinks from '@/components/sidebar/sidebar-links';
@@ -10,7 +13,16 @@ import {
 } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 
-export default function Sidebar() {
+export type ProfileProps = {
+  name: string;
+  email: string;
+  avatar: string;
+};
+
+export default function SidebarMenu({ user }: { user: ProfileProps }) {
+  const [open, setOpen] = useState(false);
+
+  const closeSidebar = () => setOpen(false);
   return (
     <>
       <div className='hidden md:inline fixed left-0 top-0 bottom-0 md:w-[250px] dark:bg-white/5 border-r dark:border-neutral-800'>
@@ -20,7 +32,7 @@ export default function Sidebar() {
             <Projects />
             <SidebarLinks />
           </div>
-          <Profile />
+          <Profile user={user} />
         </div>
       </div>
 
@@ -28,7 +40,7 @@ export default function Sidebar() {
       <div className='flex items-center justify-between md:hidden p-6 border-b  dark:border-b-slate-800'>
         <Logo />
         <div className='flex items-center gap-2'>
-          <Sheet>
+          <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
               <Menu className='size-8 dark:text-gray-400 bg-white/15 p-1 rounded-sm cursor-pointer hover:dark:text-gray-200 transition-colors' />
             </SheetTrigger>
@@ -41,9 +53,9 @@ export default function Sidebar() {
                 <div className='flex flex-col justify-between gap-4 w-full'>
                   <Logo small />
                   <Projects />
-                  <SidebarLinks />
+                  <SidebarLinks closeSidebar={closeSidebar} />
                 </div>
-                <Profile />
+                <Profile user={user} />
               </div>
             </SheetContent>
           </Sheet>

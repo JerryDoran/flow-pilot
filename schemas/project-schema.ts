@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const formSchema = z.object({
+const projectFormSchema = z.object({
   name: z.string().min(1, { message: 'Project name is required' }).max(50, {
     message: 'Project name must be less than 50 characters',
   }),
@@ -13,6 +13,6 @@ const formSchema = z.object({
     .optional(),
 });
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type ProjectFormSchema = z.infer<typeof projectFormSchema>;
 
-export default formSchema;
+export default projectFormSchema;
