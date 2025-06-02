@@ -3,6 +3,7 @@
 import { auth } from '@/lib/auth';
 import { RegisterFormValues } from '@/components/auth/signup-form';
 import { LoginFormValues } from '@/components/auth/login';
+import { APIError } from 'better-auth/api';
 
 export async function registerUser(data: RegisterFormValues) {
   try {
@@ -21,8 +22,19 @@ export async function registerUser(data: RegisterFormValues) {
       message: 'User registered successfully',
     };
   } catch (error) {
-    console.error('Error registering user:', error);
-    throw new Error('Registration failed. Please try again later.');
+    console.error('Error during registration:', error);
+    if (error instanceof APIError) {
+      console.log('API Error:', error.message, error.status);
+      // Handle specific API errors - can use switch statement for more cases
+      if (error.status === 'UNPROCESSABLE_ENTITY') {
+        throw new Error(
+          error.message || 'That user already exists. Please try another.'
+        );
+      }
+    } else {
+      console.error('Unexpected error during registration:', error);
+      throw new Error('An unexpected error occurred. Please try again later.');
+    }
   }
 }
 
@@ -40,7 +52,17 @@ export async function loginUser(data: LoginFormValues) {
       message: 'User logged in successfully',
     };
   } catch (error) {
-    console.error('Error logging in user:', error);
-    throw new Error('Login failed. Please try again later.');
+    if (error instanceof APIError) {
+      console.log('API Error:', error.message, error.status);
+      // Handle specific API errors - can use switch statement for more cases
+      if (error.status === 'UNAUTHORIZED') {
+        throw new Error(
+          error.message || 'Invalid email or password. Please try again.'
+        );
+      }
+    } else {
+      console.error('Unexpected error during login:', error);
+      throw new Error('An unexpected error occurred. Please try again later.');
+    }
   }
 }

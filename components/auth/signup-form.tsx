@@ -60,24 +60,19 @@ export default function SignupForm() {
 
     try {
       const result = await registerUser(data);
-      if (result.success) {
+      if (result?.success) {
         toast.success('Success!', {
           description: result.message,
         });
         // Optional: redirect to login page
         router.push('/dashboard');
-      } else {
-        toast.error('Error', {
-          description: result.message,
-        });
       }
     } catch (error) {
-      toast.error('Error', {
+      toast.error('Existing email', {
         description:
-          typeof error === 'object' && error !== null && 'message' in error
-            ? (error as { message?: string }).message ||
-              'Failed to register user'
-            : 'An unexpected error occurred',
+          error instanceof Error
+            ? error.message
+            : 'An error occurred while signing up. Please try again.',
       });
       console.log(error);
     } finally {

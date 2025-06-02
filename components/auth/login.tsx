@@ -53,20 +53,19 @@ export default function LoginForm() {
 
     try {
       const result = await loginUser(values);
-      if (result.success) {
-        toast.success("Success!", {
+      if (result?.success) {
+        toast.success('Success!', {
           description: result.message,
         });
         // Optional: redirect to login page
-        router.push("/dashboard");
-      } else {
-        toast.error("Error", {
-          description: result.message,
-        });
+        router.push('/dashboard');
       }
     } catch (error) {
-      toast.error('Error', {
-        description: 'Something went wrong. Please try again.',
+      toast.error('Invalid credentials', {
+        description:
+          error instanceof Error
+            ? error.message
+            : 'An error occurred while signing in. Please try again.',
       });
       console.log(error);
     } finally {
