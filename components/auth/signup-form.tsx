@@ -10,7 +10,6 @@ import { registerUser } from '@/actions/users';
 
 import { useRouter } from 'next/navigation';
 import Logo from '../shared/logo';
-import { Icons } from '../shared/oauth-buttons';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import SocialButtons from '@/components/auth/social-buttons';
 
 // Define schema for form validation with Zod
 const registerSchema = z.object({
@@ -93,16 +93,7 @@ export default function SignupForm() {
             <p className='text-sm'>Welcome! Create an account to get started</p>
           </div>
 
-          <div className='mt-6 grid grid-cols-2 gap-3'>
-            <Button type='button' variant='outline'>
-              <Icons.google />
-              <span>Google</span>
-            </Button>
-            <Button type='button' variant='outline'>
-              <Icons.gitHub />
-              <span>Github</span>
-            </Button>
-          </div>
+          <SocialButtons />
 
           <hr className='my-4 border-dashed' />
 

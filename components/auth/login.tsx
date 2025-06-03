@@ -20,8 +20,8 @@ import * as z from 'zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import Logo from '../shared/logo';
-import { Icons } from '../shared/oauth-buttons';
 import { loginUser } from '@/actions/users';
+import SocialButtons from '@/components/auth/social-buttons';
 
 // Define the validation schema with Zod
 const loginSchema = z.object({
@@ -83,16 +83,7 @@ export default function LoginForm() {
             <p className='text-sm'>Welcome back! Sign in to continue</p>
           </div>
 
-          <div className='mt-6 grid grid-cols-2 gap-3'>
-            <Button type='button' variant='outline'>
-              <Icons.google />
-              <span>Google</span>
-            </Button>
-            <Button type='button' variant='outline'>
-              <Icons.gitHub />
-              <span>Github</span>
-            </Button>
-          </div>
+          <SocialButtons />
 
           <hr className='my-4 border-dashed' />
 
