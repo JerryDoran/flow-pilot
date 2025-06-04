@@ -3,9 +3,11 @@ import { Icons } from '@/components/shared/oauth-buttons';
 import { signIn } from '@/lib/auth-client';
 
 export default function SocialButtons() {
+  
   const signInWithOAuth = async (provider: 'github' | 'google') => {
     await signIn.social({
       provider: provider,
+      callbackURL: '/dashboard',
     });
   };
 
