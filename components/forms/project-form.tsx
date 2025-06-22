@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import formSchema, { FormSchema } from '@/schemas/project-schema';
+import projectFormSchema, { ProjectFormSchema } from '@/schemas/project-schema';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 
@@ -29,14 +29,24 @@ export default function ProjectForm() {
   const [emoji, setEmoji] = useState(
     'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f30e.png'
   );
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+
+  const form = useForm<ProjectFormSchema>({
+    resolver: zodResolver(projectFormSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+      // add other fields here if your schema has more
+    },
   });
 
-  function onSubmit(values: FormSchema) {
-    try {
-      console.log(values);
+  function onSubmit(values: ProjectFormSchema) {
+    try {      
       setIsLoading(true);
+      // get cover url
+      
+      //check if user is authenticated
+
+      //save project
     } catch (error) {
       console.error('Form submission error', error);
       toast.error('Failed to submit the form. Please try again.');
@@ -44,6 +54,7 @@ export default function ProjectForm() {
       setIsLoading(false);
     }
   }
+
   return (
     <Form {...form}>
       <form
