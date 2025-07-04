@@ -20,10 +20,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Cover from '@/components/forms/cover';
+import { uploadCover } from '@/services/cover';
+import { useSession } from '@/lib/auth-client';
 
 export default function ProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [coverUrl, setCoverUrl] = useState<string | File>(
+  const [cover, setCover] = useState<string | File>(
     'https://avatar.vercel.sh/webarchitech'
   );
   const [emoji, setEmoji] = useState(
@@ -39,17 +41,36 @@ export default function ProjectForm() {
     },
   });
 
-  function onSubmit(values: ProjectFormSchema) {
-    try {      
+  const session = useSession();
+
+  async function onSubmit(values: ProjectFormSchema) {
+    try {
       setIsLoading(true);
       // get cover url
-      
+      const coverUrl = await uploadCover(cover);
+      if (!coverUrl) {
+        return toast.error('Failed to upload cover image');
+      }
+      toast.success('Cover image uploaded successfully');
+
       //check if user is authenticated
+      const { user } = session.data || {};
+      if (!user) {
+        return toast.error('You must be logged in to create a project');
+      }
+
+      const projectData = {
+        cover: coverUrl,
+        emoji,
+        name: values.name,
+        description: values.description || '',
+        ownerId: user.id, 
+      };
 
       //save project
     } catch (error) {
       console.error('Form submission error', error);
-      toast.error('Failed to submit the form. Please try again.');
+      toast.error('An error occurred uploading cover image.');
     } finally {
       setIsLoading(false);
     }
@@ -67,9 +88,9 @@ export default function ProjectForm() {
         <div className='py-5 space-y-1'>
           <FormLabel className='text-lg font-semibold'>Cover Image</FormLabel>
           <Cover
-            coverUrl={coverUrl}
+            coverUrl={cover}
             emoji={emoji}
-            setCoverUrl={setCoverUrl}
+            setCoverUrl={setCover}
             setEmoji={setEmoji}
           />
         </div>
