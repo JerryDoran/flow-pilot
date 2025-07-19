@@ -1,11 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import projectFormSchema, { ProjectFormSchema } from '@/schemas/project-schema';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useSession } from '@/lib/auth-client';
+import { uploadCover } from '@/services/cover';
+import { createProject } from '@/actions/projects';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -20,8 +24,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Cover from '@/components/forms/cover';
-import { uploadCover } from '@/services/cover';
-import { useSession } from '@/lib/auth-client';
 
 export default function ProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +33,8 @@ export default function ProjectForm() {
   const [emoji, setEmoji] = useState(
     'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f30e.png'
   );
+
+  const router = useRouter();
 
   const form = useForm<ProjectFormSchema>({
     resolver: zodResolver(projectFormSchema),
@@ -64,8 +68,12 @@ export default function ProjectForm() {
         emoji,
         name: values.name,
         description: values.description || '',
-        ownerId: user.id, 
+        ownerId: user.id,
       };
+
+      await createProject(projectData);
+      toast.success('Project created successfully!');
+      router.push('/dashboard');
 
       //save project
     } catch (error) {
